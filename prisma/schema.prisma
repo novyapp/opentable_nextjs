@@ -13,14 +13,14 @@ datasource db {
 model Restaurant {
   id          Int      @id @default(autoincrement())
   name        String
-  main_img    String
+  main_image  String
   images      String[]
   description String
   open_time   String
   close_time  String
   slug        String   @unique
   price       PRICE
-  Item        Item[]
+  item        Item[]
   location_id Int
   location    Location @relation(fields: [location_id], references: [id])
   cuisine_id  Int
