@@ -1,6 +1,9 @@
-import Header from "../components/Header";
 import Menu from "../components/Menu";
 import RestaurantNavbar from "../components/RestaurantNavbar";
+
+export const metadata = {
+  title: "Menu of - OpenTable",
+};
 
 export default function RestaurantMenu() {
   return (
