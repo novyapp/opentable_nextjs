@@ -1,4 +1,5 @@
 import Price from "@/app/components/Price";
+import Stars from "@/app/components/Stars";
 import { calculateReviewRatingAverage } from "@/utils/calculateReviewRatingAverage";
 import Link from "next/link";
 import { RestaurantByCity } from "../page";
@@ -27,7 +28,9 @@ export default function RestaurantCard({
       <div className="pl-5">
         <h2 className="text-3xl">{restaurant.name}</h2>
         <div className="flex items-start">
-          <div className="flex mb-2">*****</div>
+          <div className="flex mb-2">
+            <Stars reviews={restaurant.review} />
+          </div>
           <p className="ml-2 text-sm">{renderRatingText()}</p>
         </div>
         <div className="mb-9">
