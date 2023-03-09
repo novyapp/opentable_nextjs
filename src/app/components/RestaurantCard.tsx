@@ -15,7 +15,10 @@ export default function RestaurantCard({ restaurant }: ReservationCardProps) {
           <h3 className="font-bold text-2xl mb-2">{restaurant.name}</h3>
           <div className="flex items-start">
             <div className="flex mb-2">*****</div>
-            <p className="ml-2">77 reviews</p>
+            <p className="ml-2">
+              {restaurant.review.length}
+              {restaurant.review.length > 1 ? ` reviews` : ` review`}
+            </p>
           </div>
           <div className="flex text-reg font-light capitalize">
             <p className=" mr-3">{restaurant.cuisine.name}</p>

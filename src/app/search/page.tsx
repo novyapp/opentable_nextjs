@@ -1,4 +1,4 @@
-import { Cuisine, PRICE, PrismaClient, Location } from "@prisma/client";
+import { Cuisine, PRICE, PrismaClient, Location, Review } from "@prisma/client";
 import React from "react";
 import Header from "./components/Header";
 import RestaurantCard from "./components/RestaurantCard";
@@ -22,6 +22,7 @@ export interface RestaurantByCity {
   location: Location;
   cuisine: Cuisine;
   price: PRICE;
+  review: Review[];
 }
 
 const prisma = new PrismaClient();
@@ -64,6 +65,7 @@ const fetchRestaurantsByLocation = (
     location: true,
     cuisine: true,
     price: true,
+    review: true,
   };
 
   if (!searchParams) return prisma.restaurant.findMany({ select });
