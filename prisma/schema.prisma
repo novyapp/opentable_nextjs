@@ -77,7 +77,7 @@ model User {
   last_name  String
   password   String
   city       String
-  email      String
+  email      String   @unique
   phone      String
   review     Review[]
   created_at DateTime @default(now())
