@@ -29,11 +29,29 @@ export async function GET(request: NextRequest) {
     select: {
       id: true,
       first_name: true,
+      last_name: true,
       email: true,
       city: true,
       phone: true,
     },
   });
 
-  return NextResponse.json({ me: user }, { status: 200 });
+  if (!user) {
+    return NextResponse.json(
+      { errorMessage: "User not found." },
+      { status: 401 }
+    );
+  }
+
+  return NextResponse.json(
+    {
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      phone: user.phone,
+      city: user.city,
+    },
+    { status: 200 }
+  );
 }

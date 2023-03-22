@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
-
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -34,12 +33,13 @@ export async function POST(request: NextRequest) {
   }
 
   //Checking for account
-  const userWithEmail = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email,
     },
   });
-  if (!userWithEmail) {
+
+  if (!user) {
     return NextResponse.json(
       { errorMessage: "Email or password is invalid." },
       { status: 401 }
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   }
 
   //Checking password
-  const isMatch = await bcrypt.hash(password, userWithEmail.password);
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     return NextResponse.json(
       { errorMessage: "Email or password is invalid." },
@@ -58,10 +58,24 @@ export async function POST(request: NextRequest) {
   //JWT
   const alg = "HS256";
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-  const token = await new jose.SignJWT({ email: userWithEmail.email })
+
+  const token = await new jose.SignJWT({ email: user.email })
     .setProtectedHeader({ alg })
     .setExpirationTime("24h")
     .sign(secret);
 
-  return NextResponse.json({ token: token }, { status: 200 });
+  const response = NextResponse.json(
+    {
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      phone: user.phone,
+      city: user.city,
+    },
+    { status: 200 }
+  );
+
+  response.cookies.set("jwt", token, { maxAge: 60 * 6 * 24 });
+
+  return response;
 }

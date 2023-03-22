@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import AuthModal from "./AuthModal";
 
 export default function NavBar() {
