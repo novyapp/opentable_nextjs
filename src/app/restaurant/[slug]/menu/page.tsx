@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import Menu from "../components/Menu";
 import RestaurantNavbar from "../components/RestaurantNavbar";
 
@@ -6,7 +5,7 @@ export const metadata = {
   title: "Menu of - OpenTable",
 };
 
-const prisma = new PrismaClient();
+import prisma from "@/utils/prisma.utils";
 
 const fetchRestaurantMenu = async (slug: string) => {
   const restaurant = await prisma.restaurant.findUnique({

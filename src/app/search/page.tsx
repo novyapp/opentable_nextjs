@@ -1,8 +1,9 @@
-import { Cuisine, PRICE, PrismaClient, Location, Review } from "@prisma/client";
+import { Cuisine, PRICE, Location, Review } from "@prisma/client";
 import React from "react";
 import Header from "./components/Header";
 import RestaurantCard from "./components/RestaurantCard";
 import SearchSideBar from "./components/SearchSideBar";
+import prisma from "@/utils/prisma.utils";
 
 export const metadata = {
   title: "Search - OpenTable",
@@ -24,8 +25,6 @@ export interface RestaurantByCity {
   price: PRICE;
   review: Review[];
 }
-
-const prisma = new PrismaClient();
 
 const fetchRestaurantsByLocation = (
   searchParams: SearchParamas
